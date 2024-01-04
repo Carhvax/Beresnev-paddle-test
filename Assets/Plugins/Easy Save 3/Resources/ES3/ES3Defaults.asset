@@ -33,6 +33,7 @@ MonoBehaviour:
     - NaughtyAttributes.Test
     - Assembly-CSharp-firstpass
     - NaughtyAttributes.Core
+    - Assembly-CSharp
     - NaughtyAttributes.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
