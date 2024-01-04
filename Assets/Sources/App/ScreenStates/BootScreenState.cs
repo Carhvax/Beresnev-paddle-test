@@ -1,0 +1,2 @@
+
+public class BootScreenState : ScreenState {}
