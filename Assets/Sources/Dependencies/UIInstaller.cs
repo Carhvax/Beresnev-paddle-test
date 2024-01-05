@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -21,20 +22,44 @@ public class UIInstaller : MonoInstaller {
     }
     
     private void BindEntry() {
-        Container.BindInstance(_entryPoint).AsSingle();
+        BindInstanceAsSingle(_entryPoint);
     }
 
     private void BindStates() {
-        Container
-            .BindInterfacesAndSelfTo<AppStates>()
-            .AsSingle();
+        BindAsSingle<AppStates>();
+        BindAsSingle<StateChangeHandler>();
+        BindAsSingle<CommandFactory>();
+        BindPresenters();
+    }
+
+    private void BindPresenters() {
+        OnType<IStatePresenter>()
+            .Each(BindAsSingle);
+        
+        BindAsSingle<PresenterFactory>();
     }
     
     private void BindSources() {
-        Container
-            .BindInstance(FindObjectsOfType<ScreenState>(true))
-            .AsSingle();
+        BindInstanceAsSingle(FindObjectsOfType<ScreenState>(true));
     }
     
+    private void BindAsSingle<T>() => Container
+        .BindInterfacesAndSelfTo<T>()
+        .AsSingle();
     
+    private void BindAsSingle(Type type) => Container
+        .BindInterfacesAndSelfTo(type)
+        .AsSingle();
+    
+    private void BindInstanceAsSingle<T>(T instance) => Container
+        .BindInstance(instance)
+        .AsSingle();
+    
+    private Type[] OnType<TType>() {
+        var interfaceType = typeof(TType);
+
+        return _domainTypes
+            .Where(type => !type.IsAbstract && type.IsClass && interfaceType.IsAssignableFrom(type))
+            .ToArray();
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,15 +13,21 @@ public interface IStateProvider {
     void Back();
 }
 
+public interface IStateObservable {
+    event Action<IScreenState> StateExit;
+    event Action<IScreenState> StateEnter;
+}
+
 namespace ScreenStates {
     
-    public class StateMachine<TState> : IStateProvider where TState : class, IScreenState {
+    public class StateMachine<TState> : IStateProvider, IStateObservable where TState : class, IScreenState {
 
         private readonly HashSet<TState> _states = new();
         private readonly Stack<TState> _history = new();
 
         private TState _current;
-    
+        public event Action<IScreenState> StateExit;
+        public event Action<IScreenState> StateEnter;
         public bool HasHistory => _history.Count > 0;
         public bool CurrentStateIs<T>() where T : class, TState => _current is T;
 
@@ -43,15 +50,21 @@ namespace ScreenStates {
         }
     
         private void ChangeState(TState state) {
-            _current?.Hide();
+            if (_current != null) {
+                _current.Hide();
+                StateExit?.Invoke(_current);
+            }
+            
             _current = state;
-            _current?.Show();
+            
+            if (_current != null) {
+                _current.Show();
+                StateEnter?.Invoke(_current);
+            }
         }
     }
 
-    internal static class ScreenStatesExtensions {
-        
-    }
+    internal static class ScreenStatesExtensions {}
 }
 
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 
 public static class CommonExtension {
 
@@ -31,4 +32,15 @@ public static class CommonExtension {
             .ToArray();
     }
     
+}
+
+public static class Delay {
+
+    public static Sequence Execute(float time, Action complete) => 
+        DOTween
+        .Sequence()
+        .AppendInterval(time)
+        .OnComplete(() => complete?.Invoke())
+        .Play();
+
 }
