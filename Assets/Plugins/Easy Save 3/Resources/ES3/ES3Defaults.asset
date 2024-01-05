@@ -29,8 +29,8 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - Zenject
     - NaughtyAttributes.Test
+    - Zenject
     - Assembly-CSharp-firstpass
     - NaughtyAttributes.Core
     - Assembly-CSharp

@@ -9,11 +9,22 @@ public class AppEntry : MonoBehaviour {
         _states = states;
 
         handler
-            .AddMap<BootScreenState>((map) => {
-                presenterFactory.AddPresenter<BootStatePresenter>(map);
-            })
+            .AddMap<BootScreenState>(presenterFactory.AddPresenter<BootStatePresenter>)
             .AddMap<MenuScreenState>((map) => {
-                
+                commandFactory.AddRouteMap<PlayGameButton, LoadingScreenState>(map);
+                commandFactory.AddRouteMap<ShowSettingsButton, SettingsScreenState>(map);
+            })
+            .AddMap<SettingsScreenState>(commandFactory.AddRouteBack<ReturnBackButton>)
+            .AddMap<LoadingScreenState>(presenterFactory.AddPresenter<LoadingStatePresenter>)
+            .AddMap<GameScreenState>(commandFactory.AddRouteMap<ShowPauseButton, PauseScreenState>)
+            .AddMap<UnLoadingScreenState>(presenterFactory.AddPresenter<UnLoadingStatePresenter>)
+            .AddMap<PauseScreenState>((map) => {
+                commandFactory.AddRouteMap<ReturnMenuButton, UnLoadingScreenState>(map);
+                commandFactory.AddRouteBack<ReturnBackButton>(map);
+            })
+            .AddMap<CompleteScreenState>((map) => {
+                commandFactory.AddRouteMap<ReturnMenuButton, UnLoadingScreenState>(map);
+                commandFactory.AddRouteMap<NextGameButton, LoadingScreenState>(map);
             })
             .Complete();
     }
