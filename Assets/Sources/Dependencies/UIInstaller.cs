@@ -40,7 +40,9 @@ public class UIInstaller : MonoInstaller {
     }
     
     private void BindSources() {
+        OnType<IAppModel>().Each(BindAsSingle);
         BindInstanceAsSingle(FindObjectsOfType<ScreenState>(true));
+        Container.Bind<IIOService>().To<EasySaveIOService>().AsSingle();
     }
     
     private void BindAsSingle<T>() => Container

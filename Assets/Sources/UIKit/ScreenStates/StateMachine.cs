@@ -9,6 +9,7 @@ public interface IScreenState {
 
 public interface IStateProvider {
     bool HasHistory { get; }
+    bool CurrentStateIs<T>() where T : class, IScreenState;
     void ChangeState<T>() where T : class, IScreenState;
     void Back();
 }
@@ -29,7 +30,7 @@ namespace ScreenStates {
         public event Action<IScreenState> StateExit;
         public event Action<IScreenState> StateEnter;
         public bool HasHistory => _history.Count > 0;
-        public bool CurrentStateIs<T>() where T : class, TState => _current is T;
+        public bool CurrentStateIs<T>() where T : class, IScreenState => _current is T;
 
         protected void AddState(TState state) {
             _states.Add(state);

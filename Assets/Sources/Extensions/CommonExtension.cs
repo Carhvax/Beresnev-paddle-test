@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Newtonsoft.Json;
 
 public static class CommonExtension {
 
@@ -31,7 +32,13 @@ public static class CommonExtension {
             .Where(t => t.IsClass && !t.IsAbstract)
             .ToArray();
     }
+
+    public static bool IsNullOrEmpty(this string source) => string.IsNullOrEmpty(source);
     
+    public static string Serialize(this object source) => JsonConvert.SerializeObject(source);
+    public static T Deserialize<T>(this string source) => JsonConvert.DeserializeObject<T>(source);
+    public static T Deserialize<T>(this object source) => source.ToString().Deserialize<T>();
+
 }
 
 public static class Delay {

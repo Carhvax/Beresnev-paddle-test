@@ -24,9 +24,11 @@ public abstract class ProfilePresenterView : MonoBehaviour, ILayoutPresenter {
     
     protected abstract void SetCurrentScore(TMP_Text field, int score);
 
-    public void UpdateProgress(float progress, int level) {
+    public void UpdateProgress(float progress) {
         if(_playerProgress) SetProgress(_playerProgress, progress);
-        
+    }
+    
+    public void UpdateLevel(int level) {
         if(_level) SetLevel(_level, level);
     }
     
