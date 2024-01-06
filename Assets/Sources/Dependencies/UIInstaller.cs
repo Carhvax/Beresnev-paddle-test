@@ -6,6 +6,7 @@ using Zenject;
 public class UIInstaller : MonoInstaller {
 
     [SerializeField] private AppEntry _entryPoint;
+    [SerializeField] private ContentProvider _contentProvider;
     
     private Type[] _domainTypes;
     
@@ -29,6 +30,7 @@ public class UIInstaller : MonoInstaller {
         BindAsSingle<AppStates>();
         BindAsSingle<StateChangeHandler>();
         BindAsSingle<CommandFactory>();
+        BindAsSingle<GameController>();
         BindPresenters();
     }
 
@@ -41,7 +43,10 @@ public class UIInstaller : MonoInstaller {
     
     private void BindSources() {
         OnType<IAppModel>().Each(BindAsSingle);
+        
         BindInstanceAsSingle(FindObjectsOfType<ScreenState>(true));
+        BindInstanceAsSingle(_contentProvider);
+        
         Container.Bind<IIOService>().To<EasySaveIOService>().AsSingle();
     }
     

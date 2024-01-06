@@ -20,7 +20,10 @@ public class ProfileModel : IAppModel {
             Progress.Value = value.progress;
         }
     }
-    
+
+    public void ResetScore() {
+        Score.Value = 0;
+    }
 }
 
 public struct ProfileState {

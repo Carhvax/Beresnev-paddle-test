@@ -30,10 +30,10 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - NaughtyAttributes.Test
+    - Assembly-CSharp
     - Zenject
     - Assembly-CSharp-firstpass
     - NaughtyAttributes.Core
-    - Assembly-CSharp
     - NaughtyAttributes.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0

@@ -36,7 +36,11 @@ public class AppEntry : MonoBehaviour {
             .AddMap<UnLoadingScreenState>(presenterFactory.AddPresenter<UnLoadingStatePresenter>)
             .AddMap<PauseScreenState>((map) => {
                 commandFactory.AddRouteMap<ReturnMenuButton, UnLoadingScreenState>(map);
+                commandFactory.AddRouteMap<RestartMenuButton, LoadingScreenState>(map);
                 commandFactory.AddRouteBack<ReturnBackButton>(map);
+                
+                presenterFactory.AddPresenter<ProfilePresenter>(map);
+                presenterFactory.AddPresenter<PauseStatePresenter>(map);
             })
             .AddMap<CompleteScreenState>((map) => {
                 commandFactory.AddRouteMap<ReturnMenuButton, UnLoadingScreenState>(map);
