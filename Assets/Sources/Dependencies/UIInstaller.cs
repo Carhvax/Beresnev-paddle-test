@@ -7,6 +7,8 @@ public class UIInstaller : MonoInstaller {
 
     [SerializeField] private AppEntry _entryPoint;
     [SerializeField] private ContentProvider _contentProvider;
+    [SerializeField] private InputPanel _inputPanel;
+    [SerializeField] private Ball _ball;
     
     private Type[] _domainTypes;
     
@@ -46,8 +48,16 @@ public class UIInstaller : MonoInstaller {
         
         BindInstanceAsSingle(FindObjectsOfType<ScreenState>(true));
         BindInstanceAsSingle(_contentProvider);
+        BindInstanceAsSingle(_inputPanel);
+        BindInstanceAsSingle(_ball);
         
-        Container.Bind<IIOService>().To<EasySaveIOService>().AsSingle();
+        BindAsSingle<PlayerInput>();
+        BindAsSingle<AiInput>();
+        
+        Container
+            .Bind<IIOService>()
+            .To<EasySaveIOService>()
+            .AsSingle();
     }
     
     private void BindAsSingle<T>() => Container
