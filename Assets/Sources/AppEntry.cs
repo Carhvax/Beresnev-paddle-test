@@ -32,6 +32,7 @@ public class AppEntry : MonoBehaviour {
                 map.AddObserver(_pauseCommand as IStateObserver);
                 
                 presenterFactory.AddPresenter<ProfilePresenter>(map);
+                presenterFactory.AddPresenter<PlayStatePresenter>(map);
             })
             .AddMap<UnLoadingScreenState>(presenterFactory.AddPresenter<UnLoadingStatePresenter>)
             .AddMap<PauseScreenState>((map) => {
@@ -45,6 +46,9 @@ public class AppEntry : MonoBehaviour {
             .AddMap<CompleteScreenState>((map) => {
                 commandFactory.AddRouteMap<ReturnMenuButton, UnLoadingScreenState>(map);
                 commandFactory.AddRouteMap<NextGameButton, LoadingScreenState>(map);
+                
+                presenterFactory.AddPresenter<ProfilePresenter>(map);
+                presenterFactory.AddPresenter<CompleteStatePresenter>(map);
             })
             .Complete();
     }

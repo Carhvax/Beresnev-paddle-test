@@ -24,6 +24,15 @@ public class ProfileModel : IAppModel {
     public void ResetScore() {
         Score.Value = 0;
     }
+    
+    public void AddScore() {
+        Score.Value++;
+    }
+
+    public void AffectScore() {
+        if (Score.Value > BestScore.Value)
+            BestScore.Value = Score.Value;
+    }
 }
 
 public struct ProfileState {

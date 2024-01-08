@@ -1,4 +1,5 @@
 ﻿public class UnLoadingStatePresenter : IStatePresenter {
+    
     private readonly GameController _controller;
     private readonly IMenuCommand _menuCommand;
 
@@ -8,9 +9,22 @@
     }
     
     public void EnterState(ScreenState state) {
-        _controller.EndGame();
+        
         Delay.Execute(2f, _menuCommand.Execute);
     }
     
+    public void ExitState(ScreenState state) {}
+}
+
+public class CompleteStatePresenter : IStatePresenter {
+    
+    private readonly GameController _controller;
+
+    public CompleteStatePresenter(GameController controller) {
+        _controller = controller;
+    }
+    
+    public void EnterState(ScreenState state) => _controller.EndGame();
+
     public void ExitState(ScreenState state) {}
 }
