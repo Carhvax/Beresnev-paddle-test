@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class InputPanel : MonoBehaviour {
+public class InputPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
     
-    private Vector3 _holdStart;
     private Plane _plane;
     private Camera _camera;
+    private bool _hold;
 
     public Vector3 Point { get; private set; }
 
@@ -14,11 +15,14 @@ public class InputPanel : MonoBehaviour {
     }
 
     private void Update() {
-        if(!Input.GetMouseButton(0)) return;
+        if(!_hold) return;
         
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
         if (_plane.Raycast(ray, out var distance))
             Point = ray.GetPoint(distance);
     }
+    
+    public void OnPointerDown(PointerEventData eventData) => _hold = true;
+    public void OnPointerUp(PointerEventData eventData) => _hold = false;
 }
