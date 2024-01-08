@@ -31,7 +31,8 @@ public class Paddle : MonoBehaviour, IReflective {
         ThrowBack(affectPosition);
         
         var boost = affectPosition.magnitude * 2; // x2 boost speed
-        var reflection = Vector3.Reflect(affectPosition.normalized, normal) * boost;
+        var bounceOffset = Vector3.right * (affectPosition.x - transform.position.x);
+        var reflection = Vector3.Reflect((affectPosition + bounceOffset).normalized, normal) * boost;
         
         return _paddleSource.TransformDirection(reflection);
     }
