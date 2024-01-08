@@ -27,7 +27,13 @@ public class GameController : IFieldEventListener {
         _content.HandleControllers(_controllers);
     }
 
-    public void HandleBallOut(Ball ball) => GameEnd?.Invoke();
+    public void HandleBallOut(Ball ball) {
+        var win = ball.transform.position.z > 0;
+
+        if (win) _model.WinGame();
+        
+        GameEnd?.Invoke();
+    }
 
     public void HandleBallReflection(Ball ball, Paddle paddle) {
         if (paddle.Ownership == PaddleOwnership.Player)

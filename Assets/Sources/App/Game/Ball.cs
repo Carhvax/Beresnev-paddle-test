@@ -22,6 +22,7 @@ public class Ball : MonoBehaviour, IAimTarget {
     public void Reset() {
         _velocity = Vector3.zero;
         transform.position = _defaultPosition;
+        _model.SetColor(Color.white);
     }
     
     public void AddForce(Vector3 direction) => _velocity = new Vector3(direction.x, 0, direction.z);
@@ -44,7 +45,7 @@ public class Ball : MonoBehaviour, IAimTarget {
     private void MoveInstance() {
         transform.Translate(_velocity * Time.deltaTime);
         
-        var length = Mathf.Clamp(_velocity.magnitude - Time.deltaTime * 10f, 10, 20);
+        var length = Mathf.Clamp(_velocity.magnitude - Time.deltaTime * 10f, 10, 40);
         _velocity = _velocity.normalized * length;
 
         if (Mathf.Abs(transform.position.z) >= 9) {

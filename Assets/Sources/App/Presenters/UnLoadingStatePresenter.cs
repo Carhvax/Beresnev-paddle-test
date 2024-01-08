@@ -17,14 +17,22 @@
 }
 
 public class CompleteStatePresenter : IStatePresenter {
-    
+
+    private readonly ProfileModel _model;
     private readonly GameController _controller;
 
-    public CompleteStatePresenter(GameController controller) {
+    public CompleteStatePresenter(ProfileModel model, GameController controller) {
+        _model = model;
         _controller = controller;
     }
     
-    public void EnterState(ScreenState state) => _controller.EndGame();
+    public void EnterState(ScreenState state) {
+        _controller.EndGame();
+
+        if (state.OnResolvePresenterView<CompletePresenterView>(out var view)) {
+            view.Win(_model.Win.Value);
+        }
+    }
 
     public void ExitState(ScreenState state) {}
 }
