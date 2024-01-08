@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Newtonsoft.Json;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public static class CommonExtension {
 
@@ -24,6 +26,19 @@ public static class CommonExtension {
         }
 
         return list;
+    }
+
+    public static T GetRandom<T>(this IEnumerable<T> source) {
+        var list = source.ToArray();
+
+        return list[Random.Range(0, list.Length)];
+    }
+
+    public static Vector3 ReflectDirection(this Vector3 normal, Vector3 direction) {
+        direction.Normalize();
+        normal = normal.normalized;
+ 
+        return (2 * ((Vector3.Dot(direction, normal)) * normal) - direction).normalized * -1;
     }
     
     public static Type[] GetAssembliesTypes(this AppDomain domain) {

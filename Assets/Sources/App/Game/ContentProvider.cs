@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ContentProvider : MonoBehaviour {
@@ -8,6 +7,8 @@ public class ContentProvider : MonoBehaviour {
 
     [Space]
     [SerializeField] private Paddle[] _paddles;
+    [SerializeField] private Ball _ball;
+    
     private IInputController[] _controllers;
     private bool _isPlay;
 
@@ -25,10 +26,15 @@ public class ContentProvider : MonoBehaviour {
         if (!_isPlay) return;
         
         _controllers.Each(c => c.InputTick());
+        _ball.InputTick();
     }
 
     public void Play() {
         _isPlay = true;
+
+        var paddle = _paddles.GetRandom();
+        
+        _ball.AddForce(paddle.transform.position - _ball.transform.position);
     }
     
     public void Pause() {

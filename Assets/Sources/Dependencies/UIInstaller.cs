@@ -69,7 +69,8 @@ public class UIInstaller : MonoInstaller {
         .AsSingle();
     
     private void BindInstanceAsSingle<T>(T instance) => Container
-        .BindInstance(instance)
+        .BindInterfacesAndSelfTo<T>()
+        .FromInstance(instance)
         .AsSingle();
     
     private Type[] OnType<TType>() {
