@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-public class BallModel : ColoredModel {
+public class BallModel : MonoBehaviour {
     public void SetColor(Color color) {
-        color *= .5f;
-        AddColor(color);
+        
     }
 }
